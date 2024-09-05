@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Key Generator</title>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #f0f0f0;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+        }
+        button {
+            background-color: #61dafb;
+            color: black;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        #generatedKey {
+            font-size: 20px;
+            margin-top: 20px;
+            color: #61dafb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Key Generator</h1>
+        <button onclick="generateKey()">Generate Key</button>
+        <div id="generatedKey"></div>
+    </div>
+
+    <script>
+        // Function to generate a key in the format xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx
+        function generateKey() {
+            const key = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+            document.getElementById("generatedKey").innerText = key;
+
+            // Save the generated key to localStorage
+            storeKey(key);
+        }
+
+        // Store the key in localStorage
+        function storeKey(newKey) {
+            let validKeys = JSON.parse(localStorage.getItem('validKeys')) || [];
+            validKeys.push(newKey);
+            localStorage.setItem('validKeys', JSON.stringify(validKeys));
+        }
+    </script>
+</body>
+</html>

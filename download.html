@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Key Protected Download</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #282c34, #61dafb);
+            font-family: 'Arial', sans-serif;
+            color: white;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+        }
+        input[type="text"], button {
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+        }
+        button {
+            background-color: #61dafb;
+            color: black;
+            cursor: pointer;
+        }
+        .message {
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Enter Key to Download</h1>
+        <input type="text" id="keyInput" placeholder="Enter your key here">
+        <button onclick="validateKey()">Submit</button>
+        <div id="message" class="message"></div>
+    </div>
+
+    <script>
+        // Pull valid keys from localStorage
+        function getValidKeys() {
+            const storedKeys = localStorage.getItem('validKeys');
+            return storedKeys ? JSON.parse(storedKeys) : [];
+        }
+
+        function validateKey() {
+            const inputKey = document.getElementById("keyInput").value;
+            const validKeys = getValidKeys();
+            const message = document.getElementById("message");
+
+            if (validKeys.includes(inputKey)) {
+                message.innerHTML = "<a href='your-download-link-here.zip' download>Click here to download your file</a>";
+                message.style.color = "green";
+            } else {
+                message.innerHTML = "Invalid Key";
+                message.style.color = "red";
+            }
+        }
+    </script>
+</body>
+</html>
